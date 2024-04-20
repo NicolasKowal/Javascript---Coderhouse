@@ -1,4 +1,4 @@
-const Users = [
+const users = [
 	["nicolas", "1234"],
 	["alfredo", "112255"],
 	["ana", "7890"],
@@ -11,9 +11,9 @@ const Users = [
 	["diego", "4556"],
 ];
 
-function BuscarUser(usuario) {
-	for (let i = 0; i < Users.length; i++) {
-		if (usuario == Users[i][0]) {
+const buscarUsuario = function (usuario) {
+	for (let i = 0; i < users.length; i++) {
+		if (usuario === users[i][0]) {
 			return i;
 		}
 	}
@@ -21,53 +21,53 @@ function BuscarUser(usuario) {
 	return -1;
 }
 
-function ValidarPassword(valor, password) {
-	if (Users[valor][1] == password) {
-		alert("Bienvenido");
+const validarContraseña = function(valor, contraseña) {
+	if (users[valor][1] === contraseña) {
+		alert("Logueo con éxito");
+		return true;
 	} else {
 		alert("Las contraseñas no coinciden");
+		return false;
 	}
 }
 
-function CrearUser(user, pass) {
-	Users.push([user, pass]);
-}
-
-function MostrarUsers() {
-	for (i = 0; i < Users.length; i++) {
-		console.log(Users[i][0], Users[i][1]);
-	}
-}
-
-function ValidarUser(nombre) {
-	for (i = 0; i < Users.length; i++) {
-		if (nombre == Users[i][0]) {
+const validarUsuario = function(nombre) {
+	for (let i = 0; i < users.length; i++) {
+		if (nombre === users[i][0]) {
 			return 1;
 		}
 	}
 }
-/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-alert("Por favor, elija una opción:\n1. Loguearse\n2. Crear Usuario");
+const crearUsuario = (usuario, contraseña) => users.push([usuario, contraseña]);
 
-let opcion = 0;
-while (opcion != 1 && opcion != 2) {
-	opcion = prompt("Ingrese el número de la opción elegida (1 o 2):");
-	if (opcion == 1) {
-		let UsuarioAIngresar = prompt("Ingrese usuario:");
-		let indice = BuscarUser(UsuarioAIngresar);
-		if (indice != -1) {
-			let ContraseñaAIngresar = prompt("Ingrese contraseña:");
-			ValidarPassword(indice, ContraseñaAIngresar);
-		}
-	} else if (opcion == 2) {
-		let user = prompt("ingrese usuario");
-		usua = ValidarUser(user);
-		if (usua != 1) {
-			let pass = prompt("ingrese contraseña");
-			CrearUser(user, pass);
-		} else {
-			alert("usuario no disponible");
-		}
+const mostrarUsuarios = () => {
+	for (let i = 0; i < users.length; i++) {
+		console.log(users[i][0], users[i][1]);
 	}
 }
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+let usuarioLogueado = false;
+	while(!usuarioLogueado)
+	{
+		let opcion = prompt("Por favor, elija una opción:\n1. Loguearse\n2. Crear Usuario");
+		if (opcion === "1") {
+			let usuarioAIngresar = prompt("Ingrese usuario:");
+			let indice = buscarUsuario(usuarioAIngresar);
+			if (indice !== -1) {
+				let contraseñaAIngresar = prompt("Ingrese contraseña:");
+				usuarioLogueado = validarContraseña(indice, contraseñaAIngresar);
+			}
+		} else if (opcion === "2") {
+			let usuarioNuevo = prompt("Ingrese usuario");
+			let usuarioDisponible = validarUsuario(usuarioNuevo);
+			if (usuarioDisponible !== 1) {
+				let contraseñaNueva = prompt("Ingrese contraseña");
+				crearUsuario(usuarioNuevo, contraseñaNueva);
+			} else {
+				alert("Usuario no disponible");
+			}
+		}
+	}
